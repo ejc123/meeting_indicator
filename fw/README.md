@@ -1,6 +1,7 @@
 # Fw
 
-**TODO: Add description**
+This is the firmware module for the meeting indicator project
+It sets up and controls the hardware
 
 ## Targets
 

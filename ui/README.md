@@ -1,7 +1,7 @@
 # Ui
 
-- Install dependencies with `mix deps.get`- Start your service with `iex -S mix`
-- Run project test suite with `mix test`
+This is the user interface for the meeting indicator project
+It uses Raax and Ace.  It's about as simple as one can get
 
 ## Learn more
 
