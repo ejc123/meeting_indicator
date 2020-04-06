@@ -12,6 +12,11 @@
         <span>End Meeting</span>
         <input type="submit" name="end" value="Out of Meeting" autofocus>
       </label>
+      <br />
+      <label>
+        <span>Reset</span>
+        <input type="submit" name="reset" value="Reset " autofocus>
+      </label>
     </form>
     <%= javascript_variables greeting: greeting %>
     <script type="text/javascript">

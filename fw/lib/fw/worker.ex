@@ -32,10 +32,14 @@ defmodule Fw.Worker do
     {:noreply, %State{state | color: Fw.colors[:red]}}
   end
 
-  @impl true
   def handle_cast(:free, state) do
     Logger.info("Worker: free}")
     {:noreply, %State{state | color: Fw.colors[:green]}}
+  end
+
+  def handle_cast(:reset, state) do
+    Logger.info("Worker: reset}")
+    {:noreply, %State{state | color: Fw.colors[:blue]}}
   end
 
   @impl true

@@ -44,6 +44,16 @@ defmodule Ui.WWW.Actions.HomePage do
         redirect("/")
         |> Session.embed(session, state.session_config)
 
+      %{"reset" => _} ->
+        Logger.info("Web reset")
+        GenServer.cast({:global, Fw.Listener}, :reset)
+        session =
+          session
+          |> Session.put_flash(:info, "State reset")
+
+        redirect("/")
+        |> Session.embed(session, state.session_config)
+
       _ ->
         redirect("/")
     end
