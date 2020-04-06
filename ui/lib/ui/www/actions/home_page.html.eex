@@ -1,0 +1,23 @@
+<main class="centered">
+  <section class="accent">
+    <!--    <%= page_header(greeting) %> -->
+    <form action="/" method="post">
+      <input type="hidden" name="_csrf_token" value="<%= csrf_token %>">
+      <label>
+        <span>Start Meeting</span>
+        <input type="submit" name="start" value="In Meeting" autofocus>
+      </label>
+      <br />
+      <label>
+        <span>End Meeting</span>
+        <input type="submit" name="end" value="Out of Meeting" autofocus>
+      </label>
+    </form>
+    <%= javascript_variables greeting: greeting %>
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+        app.show(greeting)
+      })
+    </script>
+  </section>
+</main>
