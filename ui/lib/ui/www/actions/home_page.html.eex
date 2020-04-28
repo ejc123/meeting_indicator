@@ -17,6 +17,10 @@
         <span>Reset</span>
         <input type="submit" name="reset" value="Reset " autofocus>
       </label>
+      <label>
+        <span>Off</span>
+        <input type="submit" name="off" value="Off " autofocus>
+      </label>
     </form>
     <%= javascript_variables greeting: greeting %>
     <script type="text/javascript">

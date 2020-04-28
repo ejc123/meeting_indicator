@@ -54,6 +54,26 @@ defmodule Ui.WWW.Actions.HomePage do
         redirect("/")
         |> Session.embed(session, state.session_config)
 
+      %{"off" => _} ->
+        Logger.info("Web off")
+        GenServer.cast({:global, Fw.Listener}, :off)
+        session =
+          session
+          |> Session.put_flash(:info, "You can shut off now")
+
+        redirect("/")
+        |> Session.embed(session, state.session_config)
+
+      %{"on" => _} ->
+        Logger.info("Web on")
+        GenServer.cast({:global, Fw.Listener}, :reset)
+        session =
+          session
+          |> Session.put_flash(:info, "Turned On")
+
+        redirect("/")
+        |> Session.embed(session, state.session_config)
+
       _ ->
         redirect("/")
     end

@@ -19,7 +19,7 @@ defmodule Fw.Worker do
 
     state = %State{
       timer: ref,
-      color: Fw.colors[:blue],
+      color: Fw.colors[:dark],
       brightness: 16
     }
 
@@ -40,6 +40,11 @@ defmodule Fw.Worker do
   def handle_cast(:reset, state) do
     Logger.info("Worker: reset}")
     {:noreply, %State{state | color: Fw.colors[:blue]}}
+  end
+
+  def handle_cast(:off, state) do
+    Logger.info("Worker: off}")
+    {:noreply, %State{state | color: Fw.colors[:dark]}}
   end
 
   @impl true

@@ -29,15 +29,24 @@ defmodule Fw.Listener do
     {:noreply, state}
   end
 
+  @impl true
   def handle_cast(:end, state) do
     Logger.info("Listener end received")
     GenServer.cast(Fw.Worker, :free)
     {:noreply, state}
   end
 
+  @impl true
   def handle_cast(:reset, state) do
     Logger.info("Listener reset received")
     GenServer.cast(Fw.Worker, :reset)
+    {:noreply, state}
+  end
+
+  @impl true
+  def handle_cast(:off, state) do
+    Logger.info("Listener off received")
+    GenServer.cast(Fw.Worker, :off)
     {:noreply, state}
   end
 
