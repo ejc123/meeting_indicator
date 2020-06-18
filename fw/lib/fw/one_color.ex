@@ -1,12 +1,10 @@
-defmodule Fw.Worker do
+defmodule Fw.OneColor do
   use GenServer
 
   require Logger
-  require Integer
-  alias Blinkchain.Point
 
   defmodule State do
-    defstruct [:timer, :color1, :color2, :brightness]
+    defstruct [:timer, :color, :brightness]
   end
 
   def start_link(opts \\ []) do
@@ -21,8 +19,7 @@ defmodule Fw.Worker do
 
     state = %State{
       timer: ref,
-      color1: Fw.colors[:dark],
-      color2: Fw.colors[:dark],
+      color: Fw.colors[:dark],
       brightness: 16
     }
 
@@ -32,22 +29,22 @@ defmodule Fw.Worker do
   @impl true
   def handle_cast(:in_meeting, state) do
     Logger.info("Worker: in_meeting}")
-    {:noreply, %State{state | color1: Fw.colors[:red], color2: Fw.colors[:yellow]}}
+    {:noreply, %State{state | color: Fw.colors[:red]}}
   end
 
   def handle_cast(:free, state) do
     Logger.info("Worker: free}")
-    {:noreply, %State{state | color1: Fw.colors[:green], color2: Fw.colors[:yellow]}}
+    {:noreply, %State{state | color: Fw.colors[:green]}}
   end
 
   def handle_cast(:reset, state) do
     Logger.info("Worker: reset}")
-    {:noreply, %State{state | color1: Fw.colors[:blue], color2: Fw.colors[:yellow]}}
+    {:noreply, %State{state | color: Fw.colors[:blue]}}
   end
 
   def handle_cast(:off, state) do
     Logger.info("Worker: off}")
-    {:noreply, %State{state | color1: Fw.colors[:dark], color2: Fw.colors[:dark]}}
+    {:noreply, %State{state | color: Fw.colors[:dark]}}
   end
 
   @impl true
@@ -58,24 +55,15 @@ defmodule Fw.Worker do
   @impl true
   def handle_info(:draw_frame, state) do
 
-    #Logger.info("Brightness: #{brightness} state.brightness #{state.brightness}")
-    (0..29)
-    |> Enum.filter(&Integer.is_even/1)
-    |> Enum.map(fn x -> %Point{x: x, y: 0} end)
-    |> Enum.each(fn point -> Blinkchain.set_pixel(point ,state.color2) end)
-
     brightness = cond do
       state.brightness > 29 -> 0
       true -> state.brightness + 1
     end
 
-    Blinkchain.set_brightness(1, Enum.at(Fw.brightness,state.brightness))
+    #Logger.info("Brightness: #{brightness} state.brightness #{state.brightness}")
+    Blinkchain.set_brightness(1, Enum.at(Fw.brightness,brightness))
+    Blinkchain.fill({0,0},30,1,state.color)
 
-    (0..29)
-    |> Enum.filter(&Integer.is_odd/1)
-    |> Enum.map(fn x -> %Point{x: x, y: 0} end)
-    |> Enum.each(fn point -> Blinkchain.set_pixel(point, state.color1) end)
-    #Blinkchain.fill({0,0},30,1,state.color)
 
     Blinkchain.render()
     {:noreply, %State{state | brightness: brightness}}
