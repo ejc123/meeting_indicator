@@ -2,15 +2,15 @@ defmodule Fw.MixProject do
   use Mix.Project
 
   @app :fw
-  @version "0.1.2"
+  @version "0.1.4"
   @all_targets [:rpi0]
 
   def project do
     [
       app: @app,
       version: @version,
-      elixir: "~> 1.9",
-      archives: [nerves_bootstrap: "~> 1.8"],
+      elixir: "~> 1.10",
+      archives: [nerves_bootstrap: "~> 1.9"],
       start_permanent: Mix.env() == :prod,
       build_embedded: true,
       aliases: [loadconfig: [&bootstrap/1]],
@@ -39,23 +39,22 @@ defmodule Fw.MixProject do
   defp deps do
     [
       # Dependencies for all targets
-      {:nerves, "~> 1.6.0", runtime: false},
-      {:shoehorn, "~> 0.6"},
-      {:ring_logger, "~> 0.6"},
+      {:nerves, "~> 1.7", runtime: false},
+      {:shoehorn, "~> 0.7"},
+      {:ring_logger, "~> 0.8.1"},
       {:toolshed, "~> 0.2"},
       {:ui, path: "../ui"},
 
       # Dependencies for all targets except :host
-      {:nerves_runtime, "~> 0.6", targets: @all_targets},
-      {:busybox, "~> 0.1.3", targets: @all_targets},
-      {:vintage_net_wifi, "~> 0.7", targets: @all_targets},
-      {:mdns_lite, "~> 0.4", targets: @all_targets},
-      {:nerves_time, "~> 0.2", targets: @all_targets},
-      {:nerves_firmware_ssh, "~> 0.2", targets: @all_targets},
+      {:nerves_runtime, "~> 0.11.3", targets: @all_targets},
+      {:nerves_pack, "~> 0.4.1", targets: @all_targets},
+      {:busybox, "~> 0.1.5", targets: @all_targets},
+#      {:vintage_net_wifi, "~> 0.8", targets: @all_targets},
+      {:nerves_time, "~> 0.4.2", targets: @all_targets},
       {:blinkchain, "~> 1.0"},
 
       # Dependencies for specific targets
-      {:nerves_system_rpi0, "~> 1.11", runtime: false, targets: :rpi0},
+      {:nerves_system_rpi0, "~> 2.0.0-rc.1", runtime: false, targets: :rpi0},
     ]
   end
 

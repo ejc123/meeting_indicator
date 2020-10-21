@@ -4,8 +4,8 @@ defmodule Ui.Mixfile do
   def project do
     [
       app: :ui,
-      version: "0.1.1",
-      elixir: "~> 1.10.2",
+      version: "0.1.2",
+      elixir: "~> 1.10.4",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -23,13 +23,13 @@ defmodule Ui.Mixfile do
 
   defp deps do
     [
-      {:ace, "~> 0.18.6"},
+      {:ace, "~> 0.18.10"},
       {:raxx_logger, "~> 0.2.2"},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.2.2"},
       {:raxx_view, "~> 0.1.7"},
       {:raxx_static, "~> 0.8.3"},
       {:raxx_session, "~> 0.2.0"},
-      {:exsync, "~> 0.2.3", only: :dev}
+      {:exsync, "~> 0.2.4", only: :dev}
     ]
   end
 

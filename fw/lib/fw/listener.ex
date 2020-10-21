@@ -11,6 +11,7 @@ defmodule Fw.Listener do
 
   @impl true
   def init(init_arg) do
+    Nerves.Runtime.validate_firmware/0
     {:ok, init_arg}
   end
 
@@ -25,28 +26,28 @@ defmodule Fw.Listener do
   @impl true
   def handle_cast(:start, state) do
     Logger.info("Listener start received")
-    GenServer.cast(Fw.Worker, :in_meeting)
+    GenServer.cast(Fw.TwoColor, :in_meeting)
     {:noreply, state}
   end
 
   @impl true
   def handle_cast(:end, state) do
     Logger.info("Listener end received")
-    GenServer.cast(Fw.Worker, :free)
+    GenServer.cast(Fw.TwoColor, :free)
     {:noreply, state}
   end
 
   @impl true
   def handle_cast(:reset, state) do
     Logger.info("Listener reset received")
-    GenServer.cast(Fw.Worker, :reset)
+    GenServer.cast(Fw.TwoColor, :reset)
     {:noreply, state}
   end
 
   @impl true
   def handle_cast(:off, state) do
     Logger.info("Listener off received")
-    GenServer.cast(Fw.Worker, :off)
+    GenServer.cast(Fw.TwoColor, :off)
     {:noreply, state}
   end
 
