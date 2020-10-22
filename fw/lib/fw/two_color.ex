@@ -10,7 +10,7 @@ defmodule Fw.TwoColor do
   end
 
   def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, opts, name: __MODULE__)
+    GenServer.start_link(__MODULE__, opts, name: Fw.TwoColor)
   end
 
   @impl true
@@ -58,6 +58,7 @@ defmodule Fw.TwoColor do
 
   @impl true
   def handle_info(:draw_frame, state) do
+    Blinkchain.set_brightness(1, Enum.at(Fw.brightness(), state.brightness))
     0..29
     |> Enum.each(fn x ->
       case Integer.is_even(x) do
@@ -66,13 +67,13 @@ defmodule Fw.TwoColor do
       end
     end)
 
+    Blinkchain.render()
+
     brightness =
       cond do
         state.brightness > 29 -> 0
         true -> state.brightness + 1
       end
-
-    Blinkchain.render()
 
     case Integer.mod(brightness + 1, 4) == 0 do
       true ->

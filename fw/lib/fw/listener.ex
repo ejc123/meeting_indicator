@@ -3,6 +3,7 @@ defmodule Fw.Listener do
   DemoListener module.
   """
   require Logger
+  require Nerves.Runtime
 
   use GenServer
 
@@ -11,7 +12,7 @@ defmodule Fw.Listener do
 
   @impl true
   def init(init_arg) do
-    Nerves.Runtime.validate_firmware/0
+    Nerves.Runtime.validate_firmware()
     {:ok, init_arg}
   end
 
