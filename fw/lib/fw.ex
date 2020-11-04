@@ -16,4 +16,7 @@ defmodule Fw do
   def colors, do: @colors
   def brightness, do: @brightness
 
+  defmodule State do
+    defstruct [:timer, :color1, :color2, :brightness, :pattern, :off]
+  end
 end

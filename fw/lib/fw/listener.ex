@@ -9,51 +9,46 @@ defmodule Fw.Listener do
   def start_link, do: start_link([])
   def start_link(args), do: GenServer.start_link(__MODULE__, args, name: {:global, Fw.Listener})
 
-  @impl true
+  @impl GenServer
   def init(init_arg) do
+    Nerves.Runtime.validate_firmware()
     {:ok, init_arg}
   end
 
-#  @impl true
-#  def handle_continue(:setup_zwave, state) do
-#    {:noreply, state}
-#  end
-
-  @impl true
+  @impl GenServer
   def handle_info(_, state), do: {:noreply, [], state}
 
-  @impl true
+  @impl GenServer
   def handle_cast(:start, state) do
     Logger.info("Listener start received")
-    GenServer.cast(Fw.Worker, :in_meeting)
+    GenServer.cast(Fw.Lights, :in_meeting)
     {:noreply, state}
   end
 
-  @impl true
+  @impl GenServer
   def handle_cast(:end, state) do
     Logger.info("Listener end received")
-    GenServer.cast(Fw.Worker, :free)
+    GenServer.cast(Fw.Lights, :free)
     {:noreply, state}
   end
 
-  @impl true
+  @impl GenServer
   def handle_cast(:reset, state) do
     Logger.info("Listener reset received")
-    GenServer.cast(Fw.Worker, :reset)
+    GenServer.cast(Fw.Lights, :reset)
     {:noreply, state}
   end
 
-  @impl true
+  @impl GenServer
   def handle_cast(:off, state) do
     Logger.info("Listener off received")
-    GenServer.cast(Fw.Worker, :off)
+    GenServer.cast(Fw.Lights, :off)
     {:noreply, state}
   end
 
-  @impl true
+  @impl GenServer
   def handle_cast(message, state) do
     Logger.info("Received: a message: #{inspect(message)}")
     {:noreply, state}
   end
-
 end
