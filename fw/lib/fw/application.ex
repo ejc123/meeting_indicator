@@ -10,12 +10,13 @@ defmodule Fw.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Fw.Supervisor]
 
-#    result = start_ssh()
-#    Logger.warn("SSH #{inspect(result)}")
+    #    result = start_ssh()
+    #    Logger.warn("SSH #{inspect(result)}")
 
     children =
       [
-        Fw.TwoColor,
+        {Registry, keys: :unique, name: WorkerRegistry},
+        Fw.Lights,
         Fw.Listener
       ] ++ children(target())
 
@@ -24,9 +25,7 @@ defmodule Fw.Application do
 
   # List all child processes to be supervised
   def children(:host) do
-    [
-
-    ]
+    []
   end
 
   def children(_target) do
