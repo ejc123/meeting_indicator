@@ -64,6 +64,36 @@ defmodule Ui.WWW.Actions.HomePage do
         redirect("/")
         |> Session.embed(session, state.session_config)
 
+      %{"two_color" => _} ->
+        Logger.info("Two Color")
+        GenServer.cast({:global, Fw.Listener}, :two_color)
+        session =
+          session
+          |> Session.put_flash(:info, "Changed pattern to two color")
+
+        redirect("/")
+        |> Session.embed(session, state.session_config)
+
+      %{"race" => _} ->
+        Logger.info("Race")
+        GenServer.cast({:global, Fw.Listener}, :race)
+        session =
+          session
+          |> Session.put_flash(:info, "Changed pattern to race")
+
+        redirect("/")
+        |> Session.embed(session, state.session_config)
+
+      %{"pulse" => _} ->
+        Logger.info("Pulse")
+        GenServer.cast({:global, Fw.Listener}, :pulse)
+        session =
+          session
+          |> Session.put_flash(:info, "Changed pattern to pulse")
+
+        redirect("/")
+        |> Session.embed(session, state.session_config)
+
       %{"on" => _} ->
         Logger.info("Web on")
         GenServer.cast({:global, Fw.Listener}, :reset)

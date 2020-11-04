@@ -21,6 +21,18 @@
         <span>Off</span>
         <input type="submit" name="off" value="Off " autofocus>
       </label>
+      <label>
+        <span>Race Pattern</span>
+        <input type="submit" name="race" value="Race " autofocus>
+      </label>
+      <label>
+        <span>Pulse Pattern</span>
+        <input type="submit" name="pulse" value="Pulse " autofocus>
+      </label>
+      <label>
+        <span>Two Color Pattern</span>
+        <input type="submit" name="two_color" value="Two Color " autofocus>
+      </label>
     </form>
     <%= javascript_variables greeting: greeting %>
     <script type="text/javascript">
