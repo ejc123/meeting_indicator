@@ -49,7 +49,6 @@ defmodule Fw.MixProject do
       {:nerves_runtime, "~> 0.11.3", targets: @all_targets},
       {:nerves_pack, "~> 0.4.1", targets: @all_targets},
       {:busybox, "~> 0.1.5", targets: @all_targets},
-#      {:vintage_net_wifi, "~> 0.8", targets: @all_targets},
       {:nerves_time, "~> 0.4.2", targets: @all_targets},
       {:blinkchain, "~> 1.0"},
 

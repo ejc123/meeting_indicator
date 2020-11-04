@@ -15,11 +15,6 @@ defmodule Fw.Listener do
     {:ok, init_arg}
   end
 
-#  @impl true
-#  def handle_continue(:setup_zwave, state) do
-#    {:noreply, state}
-#  end
-
   @impl GenServer
   def handle_info(_, state), do: {:noreply, [], state}
 
@@ -56,5 +51,4 @@ defmodule Fw.Listener do
     Logger.info("Received: a message: #{inspect(message)}")
     {:noreply, state}
   end
-
 end
