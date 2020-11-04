@@ -94,7 +94,7 @@ defmodule Fw.Lights do
      %Fw.State{
        state
        | color1: Fw.colors()[:blue],
-         color2: Fw.colors()[:blue],
+         color2: Fw.colors()[:dark],
          pattern: :race,
          off: false
      }}
@@ -157,10 +157,12 @@ defmodule Fw.Lights do
         end)
 
       :race ->
-        Blinkchain.fill({0, 0}, 30, 1, state.color1)
+        Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 5, y: 0}, 30, 1)
+        Blinkchain.fill(%Point{x: 0, y: 0}, 5, 1, state.color1)
 
       :pulse ->
-        Blinkchain.fill({0, 0}, 30, 1, state.color1)
+        Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 1, y: 0}, 30, 1)
+        Blinkchain.set_pixel(%Point{x: 0, y: 0}, state.color1)
 
       :one_color ->
         Blinkchain.fill({0, 0}, 30, 1, state.color1)
@@ -177,6 +179,16 @@ defmodule Fw.Lights do
     case state.pattern do
       :two_color ->
         case Integer.mod(brightness + 1, 4) == 0 do
+          true ->
+            {:noreply,
+             %Fw.State{state | brightness: brightness, color1: state.color2, color2: state.color1}}
+
+          false ->
+            {:noreply, %Fw.State{state | brightness: brightness}}
+        end
+
+      :race ->
+        case Integer.mod(brightness + 1, 5) == 0 do
           true ->
             {:noreply,
              %Fw.State{state | brightness: brightness, color1: state.color2, color2: state.color1}}
