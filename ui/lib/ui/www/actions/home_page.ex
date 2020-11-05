@@ -74,6 +74,16 @@ defmodule Ui.WWW.Actions.HomePage do
         redirect("/")
         |> Session.embed(session, state.session_config)
 
+      %{"one_color" => _} ->
+        Logger.info("One Color")
+        GenServer.cast({:global, Fw.Listener}, :one_color)
+        session =
+          session
+          |> Session.put_flash(:info, "Changed pattern to one color")
+
+        redirect("/")
+        |> Session.embed(session, state.session_config)
+
       %{"race" => _} ->
         Logger.info("Race")
         GenServer.cast({:global, Fw.Listener}, :race)

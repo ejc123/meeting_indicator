@@ -4,6 +4,50 @@ defmodule Fw.Lights do
   require Logger
   require Integer
   alias Blinkchain.Point
+  alias Blinkchain.Color
+
+  @yellow Color.parse("#FFFF00")
+  @green Color.parse("#00FF00")
+  @red Color.parse("#FF0000")
+  @blue Color.parse("#6678EE")
+  @dark Color.parse("#000000")
+
+  @brightness [
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32,
+    30,
+    28,
+    26,
+    24,
+    22,
+    20,
+    18,
+    16,
+    14,
+    12,
+    10,
+    8,
+    6,
+    4
+  ]
+
+  defmodule State do
+    defstruct [:timer, :color1, :color2, :brightness, :pattern, :off]
+  end
 
   def start_link(opts \\ []) do
     GenServer.start_link(__MODULE__, opts, name: Fw.Lights)
@@ -15,10 +59,10 @@ defmodule Fw.Lights do
     # which will end up being approximately 15 fps.
     {:ok, ref} = :timer.send_interval(120, :draw_frame)
 
-    state = %Fw.State{
+    state = %State{
       timer: ref,
-      color1: Fw.colors()[:dark],
-      color2: Fw.colors()[:dark],
+      color1: @dark,
+      color2: @dark,
       brightness: 16,
       pattern: :two_color,
       off: false
@@ -28,7 +72,7 @@ defmodule Fw.Lights do
   end
 
   defp blank() do
-    Blinkchain.fill({0, 0}, 30, 1, Fw.colors()[:dark])
+    Blinkchain.fill({0, 0}, 30, 1, @dark)
     Blinkchain.set_brightness(1, 1)
     Blinkchain.render()
   end
@@ -42,25 +86,25 @@ defmodule Fw.Lights do
   @impl GenServer
   def handle_cast(:in_meeting, state) do
     Logger.info("Worker: in_meeting}")
+    blank()
 
-    {:noreply,
-     %Fw.State{state | color1: Fw.colors()[:red], color2: Fw.colors()[:yellow], off: false}}
+    {:noreply, %State{state | color1: @red, color2: @yellow, off: false}}
   end
 
   @impl GenServer
   def handle_cast(:free, state) do
     Logger.info("Worker: free}")
+    blank()
 
-    {:noreply,
-     %Fw.State{state | color1: Fw.colors()[:green], color2: Fw.colors()[:yellow], off: false}}
+    {:noreply, %State{state | color1: @green, color2: @yellow, off: false}}
   end
 
   @impl GenServer
   def handle_cast(:reset, state) do
     Logger.info("Worker: reset}")
+    blank()
 
-    {:noreply,
-     %Fw.State{state | color1: Fw.colors()[:blue], color2: Fw.colors()[:yellow], off: false}}
+    {:noreply, %State{state | color1: @blue, color2: @yellow, off: false}}
   end
 
   @impl GenServer
@@ -68,20 +112,47 @@ defmodule Fw.Lights do
     Logger.info("Worker: off}")
     blank()
 
+    {:noreply, %State{state | color1: @dark, color2: @dark, off: true}}
+  end
+
+  @impl GenServer
+  def handle_cast(:two_color, %State{color1: @dark, color2: @dark} = state) do
+    Logger.info("Worker: two_color}")
+    blank()
+
     {:noreply,
-     %Fw.State{state | color1: Fw.colors()[:dark], color2: Fw.colors()[:dark], off: true}}
+     %State{
+       state
+       | color1: @blue,
+         color2: @yellow,
+         pattern: :two_color,
+         off: false
+     }}
   end
 
   @impl GenServer
   def handle_cast(:two_color, state) do
     Logger.info("Worker: two_color}")
+    blank()
 
     {:noreply,
-     %Fw.State{
+     %State{
        state
-       | color1: Fw.colors()[:blue],
-         color2: Fw.colors()[:yellow],
-         pattern: :two_color,
+       | pattern: :two_color,
+         off: false
+     }}
+  end
+
+  @impl GenServer
+  def handle_cast(:race, %State{color1: @dark, color2: @dark} = state) do
+    Logger.info("Worker: race}")
+
+    {:noreply,
+     %State{
+       state
+       | color1: @blue,
+         color2: @dark,
+         pattern: :race,
          off: false
      }}
   end
@@ -91,11 +162,23 @@ defmodule Fw.Lights do
     Logger.info("Worker: race}")
 
     {:noreply,
-     %Fw.State{
+     %State{
        state
-       | color1: Fw.colors()[:blue],
-         color2: Fw.colors()[:dark],
-         pattern: :race,
+       | pattern: :race,
+         off: false
+     }}
+  end
+
+  @impl GenServer
+  def handle_cast(:pulse, %State{color1: @dark, color2: @dark} = state) do
+    Logger.info("Worker: pulse}")
+
+    {:noreply,
+     %State{
+       state
+       | color1: @blue,
+         color2: @dark,
+         pattern: :pulse,
          off: false
      }}
   end
@@ -105,11 +188,23 @@ defmodule Fw.Lights do
     Logger.info("Worker: pulse}")
 
     {:noreply,
-     %Fw.State{
+     %State{
        state
-       | color1: Fw.colors()[:blue],
-         color2: Fw.colors()[:blue],
-         pattern: :pulse,
+       | pattern: :pulse,
+         off: false
+     }}
+  end
+
+  @impl GenServer
+  def handle_cast(:one_color, %State{color1: @dark, color2: @dark} = state) do
+    Logger.info("Worker: one_color}")
+
+    {:noreply,
+     %State{
+       state
+       | color1: @blue,
+         color2: @dark,
+         pattern: :one_color,
          off: false
      }}
   end
@@ -119,11 +214,9 @@ defmodule Fw.Lights do
     Logger.info("Worker: one_color}")
 
     {:noreply,
-     %Fw.State{
+     %State{
        state
-       | color1: Fw.colors()[:blue],
-         color2: Fw.colors()[:blue],
-         pattern: :one_color,
+       | pattern: :one_color,
          off: false
      }}
   end
@@ -135,70 +228,95 @@ defmodule Fw.Lights do
   end
 
   @impl GenServer
-  def handle_info(:draw_frame, %Fw.State{off: off} = state) when off do
-    Logger.info("First Received: a message: draw_frame")
+  def handle_info(:draw_frame, %State{off: off} = state) when off do
+    Logger.info(":off message: draw_frame")
+    {:noreply, state}
+  end
+
+  @impl GenServer
+  def handle_info(:draw_frame, %State{pattern: :two_color} = state) do
+    Logger.info(":two_color message: #{inspect(state)}")
+    Blinkchain.set_brightness(1, Enum.at(@brightness, state.brightness))
+
+    0..29
+    |> Enum.each(fn
+      x ->
+        case Integer.is_even(x) do
+          true -> Blinkchain.set_pixel(%Point{x: x, y: 0}, state.color2)
+          false -> Blinkchain.set_pixel(%Point{x: x, y: 0}, state.color1)
+        end
+    end)
+
+    Blinkchain.render()
+
+    get_return_value(state, 4)
+  end
+
+  @impl GenServer
+  def handle_info(:draw_frame, %State{pattern: :race} = state) do
+    Logger.info(":race message: #{inspect(state)}")
+    Blinkchain.set_brightness(1, 32)
+
+    Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 5, y: 0}, 25, 1)
+    Blinkchain.fill(%Point{x: 0, y: 0}, 5, 1, state.color1)
+
+    Blinkchain.render()
+
+    get_return_value(state, 5)
+  end
+
+  @impl GenServer
+  def handle_info(:draw_frame, %State{pattern: :pulse} = state) do
+    Logger.info(":pulse message: #{inspect(state)}")
+    Blinkchain.set_brightness(1, Enum.at(@brightness, state.brightness))
+
+    Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 1, y: 0}, 29, 1)
+    Blinkchain.set_pixel(%Point{x: 0, y: 0}, state.color1)
+
+    Blinkchain.render()
+
+    {:noreply, %State{state | brightness: calculate_brightness(state)}}
+  end
+
+  @impl GenServer
+  def handle_info(:draw_frame, %State{pattern: :one_color} = state) do
+    Logger.info(":one_color message: #{inspect(state)}")
+    Blinkchain.set_brightness(1, 32)
+
+    Blinkchain.fill({0, 0}, 30, 1, state.color1)
+    Blinkchain.render()
+
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_info(:draw_frame, state) do
-    Logger.info("2nd Received: a message: #{inspect(state)}")
-    Blinkchain.set_brightness(1, Enum.at(Fw.brightness(), state.brightness))
+    Logger.info("Received unknown message: #{inspect(state)}")
+    {:noreply, state}
+  end
 
-    case state.pattern do
-      :two_color ->
-        0..29
-        |> Enum.each(fn
-          x ->
-            case Integer.is_even(x) do
-              true -> Blinkchain.set_pixel(%Point{x: x, y: 0}, state.color2)
-              false -> Blinkchain.set_pixel(%Point{x: x, y: 0}, state.color1)
-            end
-        end)
-
-      :race ->
-        Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 5, y: 0}, 30, 1)
-        Blinkchain.fill(%Point{x: 0, y: 0}, 5, 1, state.color1)
-
-      :pulse ->
-        Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 1, y: 0}, 30, 1)
-        Blinkchain.set_pixel(%Point{x: 0, y: 0}, state.color1)
-
-      :one_color ->
-        Blinkchain.fill({0, 0}, 30, 1, state.color1)
+  defp calculate_brightness(state) do
+    cond do
+      state.brightness > 29 -> 0
+      true -> state.brightness + 1
     end
+  end
 
-    Blinkchain.render()
+  defp get_return_value(state, mod) do
+    brightness = calculate_brightness(state)
 
-    brightness =
-      cond do
-        state.brightness > 29 -> 0
-        true -> state.brightness + 1
-      end
+    case Integer.mod(brightness + 1, mod) == 0 do
+      true ->
+        {:noreply,
+         %State{
+           state
+           | brightness: brightness,
+             color1: state.color2,
+             color2: state.color1
+         }}
 
-    case state.pattern do
-      :two_color ->
-        case Integer.mod(brightness + 1, 4) == 0 do
-          true ->
-            {:noreply,
-             %Fw.State{state | brightness: brightness, color1: state.color2, color2: state.color1}}
-
-          false ->
-            {:noreply, %Fw.State{state | brightness: brightness}}
-        end
-
-      :race ->
-        case Integer.mod(brightness + 1, 5) == 0 do
-          true ->
-            {:noreply,
-             %Fw.State{state | brightness: brightness, color1: state.color2, color2: state.color1}}
-
-          false ->
-            {:noreply, %Fw.State{state | brightness: brightness}}
-        end
-
-      _ ->
-        {:noreply, %Fw.State{state | brightness: brightness}}
+      false ->
+        {:noreply, %State{state | brightness: brightness}}
     end
   end
 end

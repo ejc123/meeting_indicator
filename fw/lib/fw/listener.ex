@@ -47,6 +47,35 @@ defmodule Fw.Listener do
   end
 
   @impl GenServer
+  def handle_cast(:one_color, state) do
+    Logger.info("Listener one_color received")
+    GenServer.cast(Fw.Lights, :one_color)
+    {:noreply, state}
+  end
+
+  @impl GenServer
+  def handle_cast(:two_color, state) do
+    Logger.info("Listener two_color received")
+    GenServer.cast(Fw.Lights, :two_color)
+    {:noreply, state}
+  end
+
+  @impl GenServer
+  def handle_cast(:race, state) do
+    Logger.info("Listener race received")
+    GenServer.cast(Fw.Lights, :race)
+    {:noreply, state}
+  end
+
+  @impl GenServer
+  def handle_cast(:pulse, state) do
+    Logger.info("Listener pulse received")
+    GenServer.cast(Fw.Lights, :pulse)
+    {:noreply, state}
+  end
+
+
+  @impl GenServer
   def handle_cast(message, state) do
     Logger.info("Received: a message: #{inspect(message)}")
     {:noreply, state}
