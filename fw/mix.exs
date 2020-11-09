@@ -44,13 +44,13 @@ defmodule Fw.MixProject do
       {:ring_logger, "~> 0.8.1"},
       {:toolshed, "~> 0.2"},
       {:ui, path: "../ui"},
+      {:lights, path: "../lights"},
 
       # Dependencies for all targets except :host
       {:nerves_runtime, "~> 0.11.3", targets: @all_targets},
       {:nerves_pack, "~> 0.4.1", targets: @all_targets},
       {:busybox, "~> 0.1.5", targets: @all_targets},
       {:nerves_time, "~> 0.4.2", targets: @all_targets},
-      {:blinkchain, "~> 1.0"},
 
       # Dependencies for specific targets
       {:nerves_system_rpi0, "~> 2.0.0-rc.1", runtime: false, targets: :rpi0},

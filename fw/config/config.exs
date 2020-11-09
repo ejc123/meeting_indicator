@@ -6,6 +6,7 @@
 use Mix.Config
 
 import_config "../../ui/config/config.exs"
+import_config "../../lights/config/config.exs"
 
 config :fw, target: Mix.target()
 
@@ -31,5 +32,4 @@ config :logger, backends: [RingLogger], level: :debug
 # of this file so it overrides the configuration defined above.
 if Mix.target() != :host do
   import_config "target.exs"
-  import_config "blinkchain.exs"
 end

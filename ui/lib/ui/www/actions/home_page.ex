@@ -26,7 +26,8 @@ defmodule Ui.WWW.Actions.HomePage do
     case data do
       %{"start" => _} ->
         Logger.info("Web start")
-        GenServer.cast({:global, Fw.Listener}, :start)
+        GenServer.cast({:global, Lights.Listener}, :start)
+
         session =
           session
           |> Session.put_flash(:info, "Meeting started")
@@ -36,7 +37,8 @@ defmodule Ui.WWW.Actions.HomePage do
 
       %{"end" => _} ->
         Logger.info("Web end")
-        GenServer.cast({:global, Fw.Listener}, :end)
+        GenServer.cast({:global, Lights.Listener}, :end)
+
         session =
           session
           |> Session.put_flash(:info, "Meeting ended")
@@ -46,7 +48,8 @@ defmodule Ui.WWW.Actions.HomePage do
 
       %{"reset" => _} ->
         Logger.info("Web reset")
-        GenServer.cast({:global, Fw.Listener}, :reset)
+        GenServer.cast({:global, Lights.Listener}, :reset)
+
         session =
           session
           |> Session.put_flash(:info, "State reset")
@@ -56,7 +59,8 @@ defmodule Ui.WWW.Actions.HomePage do
 
       %{"off" => _} ->
         Logger.info("Web off")
-        GenServer.cast({:global, Fw.Listener}, :off)
+        GenServer.cast({:global, Lights.Listener}, :off)
+
         session =
           session
           |> Session.put_flash(:info, "You can shut off now")
@@ -66,7 +70,8 @@ defmodule Ui.WWW.Actions.HomePage do
 
       %{"two_color" => _} ->
         Logger.info("Two Color")
-        GenServer.cast({:global, Fw.Listener}, :two_color)
+        GenServer.cast({:global, Lights.Listener}, :two_color)
+
         session =
           session
           |> Session.put_flash(:info, "Changed pattern to two color")
@@ -76,7 +81,8 @@ defmodule Ui.WWW.Actions.HomePage do
 
       %{"one_color" => _} ->
         Logger.info("One Color")
-        GenServer.cast({:global, Fw.Listener}, :one_color)
+        GenServer.cast({:global, Lights.Listener}, :one_color)
+
         session =
           session
           |> Session.put_flash(:info, "Changed pattern to one color")
@@ -86,7 +92,8 @@ defmodule Ui.WWW.Actions.HomePage do
 
       %{"race" => _} ->
         Logger.info("Race")
-        GenServer.cast({:global, Fw.Listener}, :race)
+        GenServer.cast({:global, Lights.Listener}, :race)
+
         session =
           session
           |> Session.put_flash(:info, "Changed pattern to race")
@@ -96,7 +103,8 @@ defmodule Ui.WWW.Actions.HomePage do
 
       %{"pulse" => _} ->
         Logger.info("Pulse")
-        GenServer.cast({:global, Fw.Listener}, :pulse)
+        GenServer.cast({:global, Lights.Listener}, :pulse)
+
         session =
           session
           |> Session.put_flash(:info, "Changed pattern to pulse")
@@ -106,7 +114,8 @@ defmodule Ui.WWW.Actions.HomePage do
 
       %{"on" => _} ->
         Logger.info("Web on")
-        GenServer.cast({:global, Fw.Listener}, :reset)
+        GenServer.cast({:global, Lights.Listener}, :reset)
+
         session =
           session
           |> Session.put_flash(:info, "Turned On")

@@ -1,4 +1,4 @@
-defmodule Fw.Lights do
+defmodule Lights.Lights do
   use GenServer, restart: :temporary
 
   require Logger
@@ -12,6 +12,7 @@ defmodule Fw.Lights do
   @blue Color.parse("#6678EE")
   @dark Color.parse("#000000")
 
+  @default_time 120
   @brightness [
     2,
     4,
@@ -50,14 +51,14 @@ defmodule Fw.Lights do
   end
 
   def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, opts, name: Fw.Lights)
+    GenServer.start_link(__MODULE__, opts, name: Lights.Lights)
   end
 
   @impl GenServer
   def init(_opts) do
     # Send ourselves a message to draw each frame every 33 ms,
     # which will end up being approximately 15 fps.
-    {:ok, ref} = :timer.send_interval(120, :draw_frame)
+    {:ok, ref} = :timer.send_interval(@default_time, :draw_frame)
 
     state = %State{
       timer: ref,
@@ -229,13 +230,13 @@ defmodule Fw.Lights do
 
   @impl GenServer
   def handle_info(:draw_frame, %State{off: off} = state) when off do
-    Logger.info(":off message: draw_frame")
+    Logger.debug(":off message: draw_frame")
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_info(:draw_frame, %State{pattern: :two_color} = state) do
-    Logger.info(":two_color message: #{inspect(state)}")
+    Logger.debug(":two_color message: #{inspect(state)}")
     Blinkchain.set_brightness(1, Enum.at(@brightness, state.brightness))
     Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 1, y: 0}, 29, 1)
     Blinkchain.fill(%Point{x: 0, y: 0}, 1, 1, state.color1)
@@ -247,7 +248,7 @@ defmodule Fw.Lights do
 
   @impl GenServer
   def handle_info(:draw_frame, %State{pattern: :race} = state) do
-    Logger.info(":race message: #{inspect(state)}")
+    Logger.debug(":race message: #{inspect(state)}")
     Blinkchain.set_brightness(1, 32)
 
     Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 5, y: 0}, 25, 1)
@@ -260,7 +261,7 @@ defmodule Fw.Lights do
 
   @impl GenServer
   def handle_info(:draw_frame, %State{pattern: :pulse} = state) do
-    Logger.info(":pulse message: #{inspect(state)}")
+    Logger.debug(":pulse message: #{inspect(state)}")
     Blinkchain.set_brightness(1, Enum.at(@brightness, state.brightness))
 
     Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 1, y: 0}, 29, 1)
@@ -273,7 +274,7 @@ defmodule Fw.Lights do
 
   @impl GenServer
   def handle_info(:draw_frame, %State{pattern: :one_color} = state) do
-    Logger.info(":one_color message: #{inspect(state)}")
+    Logger.debug(":one_color message: #{inspect(state)}")
     Blinkchain.set_brightness(1, 32)
 
     Blinkchain.fill({0, 0}, 30, 1, state.color1)
@@ -284,7 +285,7 @@ defmodule Fw.Lights do
 
   @impl GenServer
   def handle_info(:draw_frame, state) do
-    Logger.info("Received unknown message: #{inspect(state)}")
+    Logger.debug("Received unknown message: #{inspect(state)}")
     {:noreply, state}
   end
 

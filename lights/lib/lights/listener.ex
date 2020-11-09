@@ -1,4 +1,4 @@
-defmodule Fw.Listener do
+defmodule Lights.Listener do
   @moduledoc """
   DemoListener module.
   """
@@ -7,7 +7,9 @@ defmodule Fw.Listener do
   use GenServer
 
   def start_link, do: start_link([])
-  def start_link(args), do: GenServer.start_link(__MODULE__, args, name: {:global, Fw.Listener})
+
+  def start_link(args),
+    do: GenServer.start_link(__MODULE__, args, name: {:global, Lights.Listener})
 
   @impl GenServer
   def init(init_arg) do
@@ -21,59 +23,58 @@ defmodule Fw.Listener do
   @impl GenServer
   def handle_cast(:start, state) do
     Logger.info("Listener start received")
-    GenServer.cast(Fw.Lights, :in_meeting)
+    GenServer.cast(Lights.Lights, :in_meeting)
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_cast(:end, state) do
     Logger.info("Listener end received")
-    GenServer.cast(Fw.Lights, :free)
+    GenServer.cast(Lights.Lights, :free)
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_cast(:reset, state) do
     Logger.info("Listener reset received")
-    GenServer.cast(Fw.Lights, :reset)
+    GenServer.cast(Lights.Lights, :reset)
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_cast(:off, state) do
     Logger.info("Listener off received")
-    GenServer.cast(Fw.Lights, :off)
+    GenServer.cast(Lights.Lights, :off)
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_cast(:one_color, state) do
     Logger.info("Listener one_color received")
-    GenServer.cast(Fw.Lights, :one_color)
+    GenServer.cast(Lights.Lights, :one_color)
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_cast(:two_color, state) do
     Logger.info("Listener two_color received")
-    GenServer.cast(Fw.Lights, :two_color)
+    GenServer.cast(Lights.Lights, :two_color)
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_cast(:race, state) do
     Logger.info("Listener race received")
-    GenServer.cast(Fw.Lights, :race)
+    GenServer.cast(Lights.Lights, :race)
     {:noreply, state}
   end
 
   @impl GenServer
   def handle_cast(:pulse, state) do
     Logger.info("Listener pulse received")
-    GenServer.cast(Fw.Lights, :pulse)
+    GenServer.cast(Lights.Lights, :pulse)
     {:noreply, state}
   end
-
 
   @impl GenServer
   def handle_cast(message, state) do
