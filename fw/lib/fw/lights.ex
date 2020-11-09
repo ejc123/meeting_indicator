@@ -237,19 +237,12 @@ defmodule Fw.Lights do
   def handle_info(:draw_frame, %State{pattern: :two_color} = state) do
     Logger.info(":two_color message: #{inspect(state)}")
     Blinkchain.set_brightness(1, Enum.at(@brightness, state.brightness))
-
-    0..29
-    |> Enum.each(fn
-      x ->
-        case Integer.is_even(x) do
-          true -> Blinkchain.set_pixel(%Point{x: x, y: 0}, state.color2)
-          false -> Blinkchain.set_pixel(%Point{x: x, y: 0}, state.color1)
-        end
-    end)
+    Blinkchain.copy(%Point{x: 0, y: 0}, %Point{x: 1, y: 0}, 29, 1)
+    Blinkchain.fill(%Point{x: 0, y: 0}, 1, 1, state.color1)
 
     Blinkchain.render()
 
-    get_return_value(state, 4)
+    get_return_value(state, 2)
   end
 
   @impl GenServer
