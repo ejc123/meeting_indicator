@@ -69,7 +69,7 @@ defmodule Lights.OtherLights do
   end
 
   def start_link(opts \\ []) do
-    GenServer.start_link(__MODULE__, opts, name: Lights.Lights)
+    GenServer.start_link(__MODULE__, opts, name: Lights.OtherLights)
   end
 
   @impl GenServer
