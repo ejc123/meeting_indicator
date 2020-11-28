@@ -112,13 +112,24 @@ defmodule Ui.WWW.Actions.HomePage do
         redirect("/")
         |> Session.embed(session, state.session_config)
 
-      %{"on" => _} ->
-        Logger.info("Web on")
-        GenServer.cast({:global, Lights.Listener}, :reset)
+      %{"on_other" => _} ->
+        Logger.info("Long Chain on")
+        GenServer.cast({:global, Lights.Listener}, :on_other)
 
         session =
           session
-          |> Session.put_flash(:info, "Turned On")
+          |> Session.put_flash(:info, "Turned Long Chain On")
+
+        redirect("/")
+        |> Session.embed(session, state.session_config)
+
+      %{"off_other" => _} ->
+        Logger.info("Long Chain off")
+        GenServer.cast({:global, Lights.Listener}, :off_other)
+
+        session =
+          session
+          |> Session.put_flash(:error, "Turned Long Chain Off")
 
         redirect("/")
         |> Session.embed(session, state.session_config)

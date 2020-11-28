@@ -42,6 +42,17 @@
         <span>One Color Pattern</span>
         <input type="submit" name="one_color" value="One Color " autofocus>
       </label>
+      <br />
+      <br />
+      <label>
+        <span>Turn Long Chain ON</span>
+        <input type="submit" name="on_other" value="ON Other " autofocus>
+      </label>
+      <br />
+      <label>
+        <span>Turn Long Chain OFF</span>
+        <input type="submit" name="off_other" value="OFF Other " autofocus>
+      </label>
     </form>
     <%= javascript_variables greeting: greeting %>
     <script type="text/javascript">
