@@ -20,7 +20,21 @@ gamma = [
 ]
 
 config :blinkchain,
-  canvas: {30, 1}
+  canvas: {150, 1}
+
+config :blinkchain, :channel0,
+  pin: 18,
+  type: :grb,
+  brightness: 32,
+  gamma: gamma,
+  arrangement: [
+    %{
+      type: :strip,
+      origin: {30, 0},
+      count: 120,
+      direction: :right
+    }
+  ]
 
 config :blinkchain, :channel1,
   pin: 13,
@@ -37,4 +51,3 @@ config :blinkchain, :channel1,
   ]
 
 config :blinkchain, dma_channel: 4 # <= The default is 5
-

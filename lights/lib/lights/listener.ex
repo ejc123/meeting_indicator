@@ -49,6 +49,20 @@ defmodule Lights.Listener do
   end
 
   @impl GenServer
+  def handle_cast(:off_other, state) do
+    Logger.info("Listener off_other received")
+    GenServer.cast(Lights.OtherLights, :off)
+    {:noreply, state}
+  end
+
+  @impl GenServer
+  def handle_cast(:on_other, state) do
+    Logger.info("Listener on_other received")
+    GenServer.cast(Lights.OtherLights, :on)
+    {:noreply, state}
+  end
+
+  @impl GenServer
   def handle_cast(:one_color, state) do
     Logger.info("Listener one_color received")
     GenServer.cast(Lights.Lights, :one_color)

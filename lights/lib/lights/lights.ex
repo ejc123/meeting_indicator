@@ -56,8 +56,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def init(_opts) do
-    # Send ourselves a message to draw each frame every 33 ms,
-    # which will end up being approximately 15 fps.
+    # Send ourselves a message to draw each frame every 120 ms,
     {:ok, ref} = :timer.send_interval(@default_time, :draw_frame)
 
     state = %State{
@@ -229,7 +228,7 @@ defmodule Lights.Lights do
   end
 
   @impl GenServer
-  def handle_info(:draw_frame, %State{off: off} = state) when off do
+  def handle_info(:draw_frame, %State{off: true} = state) do
     Logger.debug(":off message: draw_frame")
     {:noreply, state}
   end
