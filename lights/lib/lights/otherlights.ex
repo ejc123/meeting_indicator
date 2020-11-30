@@ -17,7 +17,7 @@ defmodule Lights.OtherLights do
   @red Color.parse("#d82727")
   @cyan Color.parse("#65c5db")
 
-  @default_time 60
+  @default_time 105
   @brightness [
     2,
     4,
