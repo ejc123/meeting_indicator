@@ -6,13 +6,13 @@ defmodule Lights.Lights do
   alias Blinkchain.Point
   alias Blinkchain.Color
 
-  @yellow Color.parse("#FFFF00")
-  @green Color.parse("#00FF00")
-  @red Color.parse("#FF0000")
-  @blue Color.parse("#6678EE")
+  @orange Color.parse("#db8039")
+  @green Color.parse("#53b812")
+  @red Color.parse("#d82727")
+  @blue Color.parse("#1760eb")
   @dark Color.parse("#000000")
 
-  @default_time 120
+  @default_time 90
   @brightness [
     2,
     4,
@@ -88,7 +88,7 @@ defmodule Lights.Lights do
     Logger.info("Worker: in_meeting}")
     blank()
 
-    {:noreply, %State{state | color1: @red, color2: @yellow, off: false}}
+    {:noreply, %State{state | color1: @red, color2: @orange, off: false}}
   end
 
   @impl GenServer
@@ -96,7 +96,7 @@ defmodule Lights.Lights do
     Logger.info("Worker: free}")
     blank()
 
-    {:noreply, %State{state | color1: @green, color2: @yellow, off: false}}
+    {:noreply, %State{state | color1: @green, color2: @orange, off: false}}
   end
 
   @impl GenServer
@@ -104,7 +104,7 @@ defmodule Lights.Lights do
     Logger.info("Worker: reset}")
     blank()
 
-    {:noreply, %State{state | color1: @blue, color2: @yellow, off: false}}
+    {:noreply, %State{state | color1: @blue, color2: @orange, off: false}}
   end
 
   @impl GenServer
@@ -124,7 +124,7 @@ defmodule Lights.Lights do
      %State{
        state
        | color1: @blue,
-         color2: @yellow,
+         color2: @orange,
          pattern: :two_color,
          off: false
      }}
