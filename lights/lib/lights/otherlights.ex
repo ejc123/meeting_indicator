@@ -108,7 +108,7 @@ defmodule Lights.OtherLights do
   end
 
   @impl GenServer
-  def handle_cast(:off, state) do
+  def handle_cast(:off_other, state) do
     Logger.info("Worker: long chain off}")
     blank()
 
