@@ -12,12 +12,12 @@ defmodule Lights.OtherLights do
   @purple Color.parse("#7504b6")
   @blue Color.parse("#1760eb")
   @green Color.parse("#53b812")
-  @yellow Color.parse("#58e315")
+  @yellow Color.parse("#faea3c")
   @orange Color.parse("#db8039")
   @red Color.parse("#d82727")
   @cyan Color.parse("#65c5db")
 
-  @default_time 120
+  @default_time 105
   @brightness [
     2,
     4,
@@ -108,7 +108,7 @@ defmodule Lights.OtherLights do
   end
 
   @impl GenServer
-  def handle_cast(:off, state) do
+  def handle_cast(:off_other, state) do
     Logger.info("Worker: long chain off}")
     blank()
 
@@ -164,7 +164,7 @@ defmodule Lights.OtherLights do
   @impl GenServer
   def handle_info(:draw_frame, state) do
     Logger.debug("Long Chain message: #{inspect(state)}")
-    Blinkchain.set_brightness(1, Enum.at(@brightness, state.brightness))
+    Blinkchain.set_brightness(0, Enum.at(@brightness, state.brightness))
     Blinkchain.copy(%Point{x: 30, y: 0}, %Point{x: 31, y: 0}, 119, 1)
     Blinkchain.fill(%Point{x: 30, y: 0}, 1, 1, state.color1)
 
