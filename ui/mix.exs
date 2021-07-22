@@ -26,7 +26,7 @@ defmodule Ui.Mixfile do
       {:ace, "~> 0.18.10"},
       {:raxx_logger, "~> 0.2.2"},
       {:jason, "~> 1.2.2"},
-      {:raxx_view, "~> 0.1.7"},
+      {:raxx_view, path: "../raxx/extensions/raxx_view"},
       {:raxx_static, "~> 0.8.3"},
       {:raxx_session, "~> 0.2.0"},
       {:exsync, "~> 0.2.4", only: :dev}

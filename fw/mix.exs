@@ -47,13 +47,13 @@ defmodule Fw.MixProject do
       {:lights, path: "../lights"},
 
       # Dependencies for all targets except :host
-      {:nerves_runtime, "~> 0.11.3", targets: @all_targets},
+      {:nerves_runtime, "~> 0.11.4", targets: @all_targets},
       {:nerves_pack, "~> 0.4.1", targets: @all_targets},
       {:busybox, "~> 0.1.5", targets: @all_targets},
       {:nerves_time, "~> 0.4.2", targets: @all_targets},
 
       # Dependencies for specific targets
-      {:nerves_system_rpi0, "~> 2.0.0-rc.1", runtime: false, targets: :rpi0},
+      {:nerves_system_rpi0, "~> 1.16", runtime: false, targets: :rpi0},
     ]
   end
 
