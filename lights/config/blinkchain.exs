@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 gamma = [
   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,

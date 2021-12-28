@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Use shoehorn to start the main application. See the shoehorn
 # docs for separating out critical OTP applications such as those
@@ -36,12 +36,28 @@ if keys == [],
 config :nerves_ssh,
   authorized_keys: Enum.map(keys, &File.read!/1)
 
+  ssid = System.get_env("NERVES_NETWORK_SSID")
+  psk =  System.get_env("NERVES_NETWORK_PSK")
+  no_wifi =  System.get_env("NERVES_NETWORK_NO_WIFI")
+
+if ssid == nil and no_wifi == nil,
+  do:
+    Mix.raise("""
+    You have not set an SSID for wireless networking
+    """)
+
+if psk == nil and no_wifi == nil,
+  do:
+    Mix.raise("""
+    You have not set an PSK for wireless networking
+    """)
+
 # Configure the network using vintage_net
 # See https://github.com/nerves-networking/vintage_net for more information
 config :vintage_net,
   regulatory_domain: "US",
   config: [
-    #    {"usb0", %{type: VintageNetDirect}},
+#    {"usb0", %{type: VintageNetDirect}},
     {"wlan0",
      %{
        type: VintageNetWiFi,
@@ -49,8 +65,8 @@ config :vintage_net,
          networks: [
            %{
              key_mgmt: :wpa_psk,
-             ssid: System.get_env("NERVES_NETWORK_SSID"),
-             psk: System.get_env("NERVES_NETWORK_PSK")
+             ssid: ssid,
+             psk: psk,
            }
          ]
        },
@@ -59,7 +75,7 @@ config :vintage_net,
   ]
 
 config :mdns_lite,
-  host: [:hostname, "nerves"],
+  host: [:hostname, "lights"],
   ttl: 120,
   services: [
     %{

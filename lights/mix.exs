@@ -4,8 +4,8 @@ defmodule Lights.MixProject do
   def project do
     [
       app: :lights,
-      version: "0.2.0",
-      elixir: "~> 1.10",
+      version: "0.2.1",
+      elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,

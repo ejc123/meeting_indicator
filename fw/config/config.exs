@@ -3,7 +3,7 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-use Mix.Config
+import Config
 
 import_config "../../ui/config/config.exs"
 import_config "../../lights/config/config.exs"
@@ -26,7 +26,15 @@ config :nerves, rpi_v2_ack: true
 # See https://hexdocs.pm/ring_logger/readme.html for more information on
 # configuring ring_logger.
 
-config :logger, backends: [RingLogger], level: :info
+config :logger, backends: [{LoggerFileBackend, :info_log}, {LoggerFileBackend, :error_log}, RingLogger], level: :info
+
+config :logger, :info_log,
+path: "/root/info.log",
+level: :info
+
+config :logger, :error_log,
+path: "/root/error.log",
+level: :error
 
 # Import target specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

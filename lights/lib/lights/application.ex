@@ -6,6 +6,7 @@ defmodule Lights.Application do
   require Logger
 
   def start(_type, _args) do
+    import Supervisor.Spec, warn: false
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Lights.Supervisor]

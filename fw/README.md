@@ -5,21 +5,38 @@ It sets up and controls the hardware
 
 ## Targets
 
-Nerves applications produce images for hardware targets based on the
-`MIX_TARGET` environment variable. If `MIX_TARGET` is unset, `mix` builds an
-image that runs on the host (e.g., your laptop). This is useful for executing
-logic tests, running utilities, and debugging. Other targets are represented by
-a short name like `rpi3` that maps to a Nerves system image for that platform.
-All of this logic is in the generated `mix.exs` and may be customized. For more
-information about targets see:
+Set the MIX_TARGET environment variable according to the hardware you are
+using.  For example:
+
+`export MIX_TARGET=rpi0`
+
+For more information about targets see:
 
 https://hexdocs.pm/nerves/targets.html#content
+
+## WIFI setup
+
+If you put your hardware in a box, it becomes tedious to swap out SD cards.
+Nerves supports over-the-air updates with the ([ssh_subsystem_fwup](https://hex.pm/packages/ssh_subsystem_fwup)) 
+package.  Your hardware needs to support networking, and you need to set
+some environment variables. 
+
+NERVES_NETWORK_SSID is the SSID for the wireless network
+NERVES_NETWORK_PSK is the shared secret for the wireless network
+
+The mix configuration checks for these and will fail if they are not
+set.  If you do not need wireless, you can set
+
+NERVES_NETWORK_NO_WIFI
+
+to ignore the wifi settings.
+
 
 ## Getting Started
 
 To start your Nerves app:
   * `export MIX_TARGET=my_target` or prefix every command with
-    `MIX_TARGET=my_target`. For example, `MIX_TARGET=rpi3`
+    `MIX_TARGET=my_target`. For example, `MIX_TARGET=rpi0`
   * Install dependencies with `mix deps.get`
   * Create firmware with `mix firmware`
   * Burn to an SD card with `mix firmware.burn`

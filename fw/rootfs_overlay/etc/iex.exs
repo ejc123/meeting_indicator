@@ -1,6 +1,8 @@
 # Add Toolshed helpers to the IEx session
 use Toolshed
 
+NervesMOTD.print()
+
 if RingLogger in Application.get_env(:logger, :backends, []) do
   IO.puts """
   RingLogger is collecting log messages from Elixir and Linux. To see the

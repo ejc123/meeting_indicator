@@ -85,7 +85,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:in_meeting, state) do
-    Logger.info("Worker: in_meeting}")
+    Logger.info("Worker: in_meeting")
     blank()
 
     {:noreply, %State{state | color1: @red, color2: @orange, off: false}}
@@ -93,7 +93,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:free, state) do
-    Logger.info("Worker: free}")
+    Logger.info("Worker: free")
     blank()
 
     {:noreply, %State{state | color1: @green, color2: @orange, off: false}}
@@ -101,7 +101,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:reset, state) do
-    Logger.info("Worker: reset}")
+    Logger.info("Worker: reset")
     blank()
 
     {:noreply, %State{state | color1: @blue, color2: @orange, off: false}}
@@ -109,7 +109,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:off, state) do
-    Logger.info("Worker: off}")
+    Logger.info("Worker: off")
     blank()
 
     {:noreply, %State{state | color1: @dark, color2: @dark, off: true}}
@@ -117,7 +117,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:two_color, %State{color1: @dark, color2: @dark} = state) do
-    Logger.info("Worker: two_color}")
+    Logger.info("Worker: two_color")
     blank()
 
     {:noreply,
@@ -132,7 +132,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:two_color, state) do
-    Logger.info("Worker: two_color}")
+    Logger.info("Worker: two_color")
     blank()
 
     {:noreply,
@@ -145,7 +145,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:race, %State{color1: @dark, color2: @dark} = state) do
-    Logger.info("Worker: race}")
+    Logger.info("Worker: race")
 
     {:noreply,
      %State{
@@ -159,7 +159,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:race, state) do
-    Logger.info("Worker: race}")
+    Logger.info("Worker: race")
 
     {:noreply,
      %State{
@@ -171,7 +171,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:pulse, %State{color1: @dark, color2: @dark} = state) do
-    Logger.info("Worker: pulse}")
+    Logger.info("Worker: pulse")
 
     {:noreply,
      %State{
@@ -185,7 +185,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:pulse, state) do
-    Logger.info("Worker: pulse}")
+    Logger.info("Worker: pulse")
 
     {:noreply,
      %State{
@@ -197,7 +197,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:one_color, %State{color1: @dark, color2: @dark} = state) do
-    Logger.info("Worker: one_color}")
+    Logger.info("Worker: one_color")
 
     {:noreply,
      %State{
@@ -211,7 +211,7 @@ defmodule Lights.Lights do
 
   @impl GenServer
   def handle_cast(:one_color, state) do
-    Logger.info("Worker: one_color}")
+    Logger.info("Worker: one_color")
 
     {:noreply,
      %State{

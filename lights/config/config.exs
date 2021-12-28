@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :lights, target: Mix.target()
 
@@ -11,4 +11,4 @@ import_config "blinkchain.exs"
 # Import target specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 #
-#  import_config "#{Mix.env()}.exs"
+#  import_config "#{config_env()}.exs"
