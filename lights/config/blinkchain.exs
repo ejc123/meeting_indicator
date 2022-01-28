@@ -52,4 +52,4 @@ config :blinkchain, :channel1,
     }
   ]
 
-config :blinkchain, dma_channel: 4 # <= The default is 5
+config :blinkchain, dma_channel: 9 # <= The default is 5
