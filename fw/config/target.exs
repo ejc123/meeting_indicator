@@ -36,42 +36,42 @@ if keys == [],
 config :nerves_ssh,
   authorized_keys: Enum.map(keys, &File.read!/1)
 
-  ssid = System.get_env("NERVES_NETWORK_SSID")
-  psk =  System.get_env("NERVES_NETWORK_PSK")
-  no_wifi =  System.get_env("NERVES_NETWORK_NO_WIFI")
+#  ssid = System.get_env("NERVES_NETWORK_SSID")
+#  psk =  System.get_env("NERVES_NETWORK_PSK")
+#  no_wifi =  System.get_env("NERVES_NETWORK_NO_WIFI")
 
-if ssid == nil and no_wifi == nil,
-  do:
-    Mix.raise("""
-    You have not set an SSID for wireless networking
-    """)
+#if ssid == nil and no_wifi == nil,
+#  do:
+#    Mix.raise("""
+#    You have not set an SSID for wireless networking
+#    """)
 
-if psk == nil and no_wifi == nil,
-  do:
-    Mix.raise("""
-    You have not set an PSK for wireless networking
-    """)
+#if psk == nil and no_wifi == nil,
+#  do:
+#    Mix.raise("""
+#    You have not set an PSK for wireless networking
+#    """)
 
 # Configure the network using vintage_net
 # See https://github.com/nerves-networking/vintage_net for more information
 config :vintage_net,
   regulatory_domain: "US",
   config: [
-#    {"usb0", %{type: VintageNetDirect}},
-    {"wlan0",
-     %{
-       type: VintageNetWiFi,
-       vintage_net_wifi: %{
-         networks: [
-           %{
-             key_mgmt: :wpa_psk,
-             ssid: ssid,
-             psk: psk,
-           }
-         ]
-       },
-       ipv4: %{method: :dhcp}
-     }}
+    {"usb0", %{type: VintageNetDirect}},
+#    {"wlan0",
+#     %{
+#       type: VintageNetWiFi,
+#       vintage_net_wifi: %{
+#         networks: [
+#           %{
+#             key_mgmt: :wpa_psk,
+#             ssid: ssid,
+#             psk: psk,
+#           }
+#         ]
+#       },
+#       ipv4: %{method: :dhcp}
+#     }}
   ]
 
 config :mdns_lite,
