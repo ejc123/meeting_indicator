@@ -2,7 +2,7 @@ defmodule Fw.MixProject do
   use Mix.Project
 
   @app :fw
-  @version "0.1.7"
+  @version "0.1.8"
   @all_targets [:rpi0]
 
   def project do [
@@ -37,6 +37,8 @@ defmodule Fw.MixProject do
       {:logger_file_backend, "~> 0.0.12"},
       {:ui, path: "../ui"},
       {:lights, path: "../lights"},
+      {:sbom, "~> 0.5.1", only: :dev, runtime: false},
+
 
       # Dependencies for all targets except :host
       {:nerves_runtime, "~> 0.11.4", targets: @all_targets},
@@ -55,7 +57,7 @@ defmodule Fw.MixProject do
       cookie: "#{@app}_cookie",
       include_erts: &Nerves.Release.erts/0,
       steps: [&Nerves.Release.init/1, :assemble],
-      strip_beams: Mix.env() == :prod
+      strip_beams: Mix.env() == :prod or [keep: ["Docs"]]
     ]
   end
 end

@@ -9,8 +9,7 @@ defmodule Lights.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      deps: deps(),
-      aliases: aliases()
+      deps: deps()
     ]
   end
 
@@ -29,7 +28,4 @@ defmodule Lights.MixProject do
     ]
   end
 
-  defp aliases() do
-    []
-  end
 end
