@@ -51,5 +51,3 @@ config :blinkchain, :channel1,
       direction: :right
     }
   ]
-
-config :blinkchain, dma_channel: 10 # <= The default is 5
