@@ -25,7 +25,7 @@ defmodule Ui.Mixfile do
     [
       {:ace, path: "/home/ejc/projects/elixir/Ace"},
       {:raxx, "~> 1.1.0"},
-      {:jason, "~> 1.2.2"},
+      {:jason, "~> 1.0"},
       {:raxx_view, path: "../raxx/extensions/raxx_view"},
       {:raxx_logger, "~> 0.2.2"},
       {:raxx_static, "~> 0.8.3"},

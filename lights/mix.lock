@@ -1,0 +1,4 @@
+%{
+  "blinkchain": {:hex, :blinkchain, "1.0.0", "0bef4296c0fc3e36c153d717eefcaf5fa6681b4c81f3f5b98030e8044d3d3fe1", [:make, :mix], [{:elixir_make, "~> 0.6", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm", "ecf950d7eb3fb0409efb64e952be3d921bc20045a5cd736cd4c4e52cfa852c7a"},
+  "elixir_make": {:hex, :elixir_make, "0.7.6", "67716309dc5d43e16b5abbd00c01b8df6a0c2ab54a8f595468035a50189f9169", [:mix], [{:castore, "~> 0.1 or ~> 1.0", [hex: :castore, repo: "hexpm", optional: true]}], "hexpm", "5a0569756b0f7873a77687800c164cca6dfc03a09418e6fcf853d78991f49940"},
+}

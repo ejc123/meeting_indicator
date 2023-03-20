@@ -47,7 +47,6 @@ defmodule Fw.MixProject do
 
       # Dependencies for specific targets
       {:nerves_system_rpi0, "~> 1.18", runtime: false, targets: :rpi0},
-#      {:custom_rpi0, github: "ejc123/custom_rpi0", runtime: false, targets: :rpi0},
     ]
   end
 

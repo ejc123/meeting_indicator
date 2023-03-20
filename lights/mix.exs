@@ -24,7 +24,7 @@ defmodule Lights.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:blinkchain, "~> 1.0"}
+      {:blinkchain, path: "../../blinkchain"}
     ]
   end
 

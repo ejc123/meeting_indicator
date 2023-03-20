@@ -19,7 +19,8 @@ gamma = [
 215, 218, 220, 223, 225, 228, 231, 233, 236, 239, 241, 244, 247, 249, 252, 255
 ]
 
-config :blinkchain, dma_channel: 9 # <= The default is 5. Channels 4, 5, 8, 9, and 10 appear to be good candidates.
+# 4, 5, 8, 9
+config :blinkchain, dma_channel: 10 # <= The default is 5. Channels 4, 5, 8, 9, and 10 appear to be good candidates.
 
 config :blinkchain,
   canvas: {150, 1}
