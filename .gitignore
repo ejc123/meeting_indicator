@@ -24,3 +24,4 @@ erl_crash.dump
 /*/.formatter.exs
 
 .tool-versions
+wifi-export.sh
